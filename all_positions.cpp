@@ -3,6 +3,7 @@
 #include "position.h"
 #include "masks/horizontal_masks.h"
 #include "diagonal_positions.h"
+#include <cassert>
 
 
 
@@ -96,6 +97,12 @@ int main () {
   print_board(dsss.get_occ_to_up_left());
   print_board(dsss.get_occ_to_down_right());
   print_board(dsss.get_occ_to_direction(Diagonal::mask_up_right));
+
+  assert(Diagonal::mask_to_direction(Diagonal::get_up_right_mask, Mask::fill_to_right, 35) == Diagonal::mask_up_right(35));
+  print_board(Diagonal::mask_up_right(35));
+  print_board(Diagonal::mask_up_left(35));
+  print_board(Diagonal::mask_down_right(35));
+  print_board(Diagonal::mask_down_left(35));
 
   return 0;
 }

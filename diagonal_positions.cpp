@@ -1,6 +1,16 @@
 #include "diagonal_positions.h"
 #include "mask.h"
 
+signed int Diagonal::get_up_right_diagonal_number(uint8_t square) {
+  signed int dif = ((square / 8) - (square % 8));
+  return dif;
+}
+
+signed int Diagonal::get_up_left_diagonal_number(uint8_t square) {
+  signed int dif = (7 - ((square % 8) + (square / 8)));
+  return dif;
+}
+
 uint64_t Diagonal::get_up_right_mask(uint8_t square) {
   signed int dif = ((square / 8) - (square % 8));
   uint64_t mask = UP_RIGHT_DIAGONAL;
@@ -103,32 +113,29 @@ uint64_t Diagonal::normalize_up_left(uint64_t board, uint8_t square) {
   return board;
 }
 
-uint64_t Diagonal::mask_up_right(uint8_t square) {
-  auto c = Diagonal::get_up_right_mask(square);
+uint64_t Diagonal::mask_to_direction(uint64_t (*diag) (uint8_t), uint64_t (*fill_direction) (uint8_t), uint8_t square) {
+  auto c = diag(square);
   auto file = (square % 8);
-  auto up_and_right = Mask::fill_to_right(file);
-  return (c & up_and_right);
+  auto partial_mask = fill_direction(file);
+  return (c & partial_mask);
+}
+
+using namespace Diagonal;
+using namespace Mask;
+uint64_t Diagonal::mask_up_right(uint8_t square) {
+  return (mask_to_direction(get_up_right_mask, fill_to_right, square));
 }
 
 uint64_t Diagonal::mask_up_left(uint8_t square) {
-  auto c = Diagonal::get_up_left_mask(square);
-  auto file = (square % 8);
-  auto up_and_left = Mask::fill_to_left(file);
-  return (c & up_and_left);
+  return (mask_to_direction(get_up_left_mask, fill_to_left, square));
 }
 
 uint64_t Diagonal::mask_down_right(uint8_t square) {
-  auto c = Diagonal::get_up_left_mask(square);
-  auto file = (square % 8);
-  auto down_and_right = Mask::fill_to_right(file);
-  return (c & down_and_right);
+  return (mask_to_direction(get_up_left_mask, fill_to_right, square));
 }
 
 uint64_t Diagonal::mask_down_left(uint8_t square) {
-  auto c = Diagonal::get_up_right_mask(square);
-  auto file = (square % 8);
-  auto down_and_left = Mask::fill_to_left(file);
-  return (c & down_and_left);
+  return (mask_to_direction(get_up_right_mask, fill_to_left, square));
 }
 
 DiagonalSituation::DiagonalSituation(uint64_t b, uint8_t s) : board(b), square(s){}
