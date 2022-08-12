@@ -57,6 +57,14 @@ uint64_t CrossSituation::get_natural_board() {
   return ((this->get_adjusted_horizontal()) | (this->get_adjusted_vertical()));
 }
 
+uint64_t CrossSituation::get_horiz_blocked_unadjusted() {
+  return ((hs.get_block_L_R()) << (8 * this->get_rank()));
+}
+
+uint64_t CrossSituation::get_vert_blocked_unadjusted() {
+  return ((vs.get_block_A_B()) << (this->get_file()));
+}
+
 int main () {
   auto situation = Situations();
   auto situations = situation.generate_horizontal_situations();
