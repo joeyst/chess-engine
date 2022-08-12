@@ -11,16 +11,17 @@ using namespace Masks;
 HorizontalSituation::HorizontalSituation() : board(0), file(0){}
 HorizontalSituation::HorizontalSituation(uint64_t b, uint8_t f) : board(b), file(f){}
 void HorizontalSituation::print_board() {
+  auto temp_board = this->board;
   vector<string> horizontals = {};
   string horizontal = "";
   for (int rank = 0; rank < 8; rank++) {
     horizontal = "\n";
     horizontal += to_string(rank);
     horizontal += "   ";
-    for (int file = 0; file < 8; file++) {
-      horizontal += to_string(board & 1);
+    for (int temp_file = 0; temp_file < 8; temp_file++) {
+      horizontal += to_string(temp_board & 1);
       horizontal += " ";
-      board >>= 1;
+      temp_board >>= 1;
     }
       horizontals.push_back(horizontal);
       horizontal = "";
