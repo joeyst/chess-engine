@@ -17,8 +17,9 @@ class CrossSituation {
     uint64_t get_adjusted_vertical();
     uint64_t get_natural_board();
     uint8_t get_square();
-    uint64_t get_horiz_blocked_unadjusted();
-    uint64_t get_vert_blocked_unadjusted();
+    uint64_t get_horiz_blocked_adjusted();
+    uint64_t get_vert_blocked_adjusted();
+    uint64_t get_blocked_adjusted();
 };
 
 class Situations {

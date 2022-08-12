@@ -57,12 +57,16 @@ uint64_t CrossSituation::get_natural_board() {
   return ((this->get_adjusted_horizontal()) | (this->get_adjusted_vertical()));
 }
 
-uint64_t CrossSituation::get_horiz_blocked_unadjusted() {
+uint64_t CrossSituation::get_horiz_blocked_adjusted() {
   return ((hs.get_block_L_R()) << (8 * this->get_rank()));
 }
 
-uint64_t CrossSituation::get_vert_blocked_unadjusted() {
+uint64_t CrossSituation::get_vert_blocked_adjusted() {
   return ((vs.get_block_A_B()) << (this->get_file()));
+}
+
+uint64_t CrossSituation::get_blocked_adjusted() {
+  return ((this->get_horiz_blocked_adjusted()) | (this->get_vert_blocked_adjusted()));
 }
 
 int main () {
@@ -86,6 +90,9 @@ int main () {
   auto css = CrossSituation(vss, hss);
 
   print_board(css.get_natural_board());
+  print_board(css.get_horiz_blocked_adjusted());
+  print_board(css.get_vert_blocked_adjusted());
+  print_board(css.get_blocked_adjusted());
 
   return 0;
 }
