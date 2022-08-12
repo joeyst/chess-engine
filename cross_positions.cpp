@@ -27,6 +27,14 @@ vector<HorizontalSituation> Situations::generate_horizontal_situations() {
   return hs;
 }
 
+vector<VerticalSituation> Situations::generate_vertical_situations() {
+  vector<VerticalSituation> vs = {};
+  for (auto situation : Situations::generate_horizontal_situations()) {
+    vs.push_back(VerticalSituation(FlipBoard::flip_board_to_vertical(situation.board), situation.file));
+  }
+  return vs;
+}
+
 int main () {
   auto situation = Situations();
   auto situations = situation.generate_horizontal_situations();
@@ -35,6 +43,13 @@ int main () {
     s.print_board();
   }
   cout << situations.size();
+
+  auto vert_situations = situation.generate_vertical_situations();
+  for (auto vs : vert_situations) {
+    std::cout << "Rank: " << (int)vs.rank << endl;
+    vs.print_board();
+  }
+  cout << vert_situations.size();
 
   return 0;
 }

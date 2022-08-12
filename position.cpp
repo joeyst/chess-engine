@@ -87,7 +87,20 @@ uint64_t VerticalSituation::flip_board_to_vertical(uint64_t b) {
   return new_board;
 }
 
-
+namespace FlipBoard {
+  uint64_t flip_board_to_vertical(uint64_t b) {
+    uint64_t new_board = 0;
+    for (int ranks_shifted = 0; ranks_shifted < 8; ranks_shifted++) {
+      new_board <<= 8;
+      if (b & LAST_SQUARE_OF_HORIZONTAL) {
+        new_board |= 1;
+      }
+      b <<= 1;
+      b &= FIRST_HORIZONTAL;
+    }
+    return new_board;
+  }
+}
 
 void VerticalSituation::print_board() {
   auto temp_board = this->board;

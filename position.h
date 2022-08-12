@@ -34,4 +34,8 @@ class VerticalSituation {
     uint64_t flip_board_to_vertical(uint64_t b);
 };
 
+namespace FlipBoard {
+ uint64_t flip_board_to_vertical(uint64_t b); 
+}
+
 #endif

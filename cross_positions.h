@@ -13,6 +13,8 @@ class Situations {
     Situations();
     vector<HorizontalSituation> generate_horizontal_situations_for_file(int file);
     vector<HorizontalSituation> generate_horizontal_situations();
+    vector<VerticalSituation> generate_vertical_situations_for_rank(int rank);
+    vector<VerticalSituation> generate_vertical_situations();
 };
 
 #endif
