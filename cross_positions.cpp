@@ -32,5 +32,7 @@ void HorizontalSituation::print_board() {
 int main () {
   auto hs = HorizontalSituation(1, 1);
   hs.print_board();
+  hs.board = Masks::mask_to_right(5);
+  hs.print_board();
   return 0;
 }
