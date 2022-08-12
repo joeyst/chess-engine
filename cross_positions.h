@@ -6,6 +6,19 @@
 #define CROSS_POSITIONS_H
 using namespace std;
 
+class CrossSituation {
+  public:
+    VerticalSituation vs;
+    HorizontalSituation hs;
+    CrossSituation(VerticalSituation vert_s, HorizontalSituation horiz_s);
+    uint8_t get_file();
+    uint8_t get_rank();
+    uint64_t get_adjusted_horizontal();
+    uint64_t get_adjusted_vertical();
+    uint64_t get_natural_board();
+    uint8_t get_square();
+};
+
 class Situations {
   public:
     vector<HorizontalSituation> horizontal_situations;

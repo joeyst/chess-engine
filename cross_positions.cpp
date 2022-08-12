@@ -35,6 +35,28 @@ vector<VerticalSituation> Situations::generate_vertical_situations() {
   return vs;
 }
 
+CrossSituation::CrossSituation(VerticalSituation vert_s, HorizontalSituation horiz_s) : vs(vert_s), hs(horiz_s){}
+
+uint8_t CrossSituation::get_file() {
+  return this->hs.file;
+}
+
+uint8_t CrossSituation::get_rank() {
+  return this->vs.rank;
+}
+
+uint64_t CrossSituation::get_adjusted_horizontal() {
+  return ((this->hs.board) << ((this->get_rank()) * 8));
+}
+
+uint64_t CrossSituation::get_adjusted_vertical() {
+  return ((this->vs.board) << (this->get_file()));
+}
+
+uint64_t CrossSituation::get_natural_board() {
+  return ((this->get_adjusted_horizontal()) | (this->get_adjusted_vertical()));
+}
+
 int main () {
   auto situation = Situations();
   auto situations = situation.generate_horizontal_situations();
@@ -50,6 +72,12 @@ int main () {
     vs.print_board();
   }
   cout << vert_situations.size();
+
+  auto vss = VerticalSituation(0x01010101, 5);
+  auto hss = HorizontalSituation(0xFE, 0);
+  auto css = CrossSituation(vss, hss);
+
+  print_board(css.get_natural_board());
 
   return 0;
 }
