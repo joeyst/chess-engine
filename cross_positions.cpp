@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "masks/horizontal_masks.h"
 
 using namespace std;
 
