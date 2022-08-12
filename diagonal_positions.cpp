@@ -148,10 +148,26 @@ uint8_t DiagonalSituation::get_up_left_diagonal_number() {
   return (7 - (this->get_file() + this->get_rank()));
 }
 
-uint64_t DiagonalSituation::get_occ_to_up_right() {
+uint64_t DiagonalSituation::get_occ_to_direction(uint64_t (*mask_of_square) (uint8_t)) {
   auto b = this->board;
-  auto mask = Diagonal::get_up_right_mask(this->square);
+  auto mask = mask_of_square(this->square);
   b &= mask;
-  b &= Mask::fill_to_right(1);
+  return b;
+}
 
+using namespace Diagonal;
+uint64_t DiagonalSituation::get_occ_to_up_right() {
+  return this->get_occ_to_direction(mask_up_right);
+}
+
+uint64_t DiagonalSituation::get_occ_to_down_left() {
+  return this->get_occ_to_direction(mask_down_left);
+}
+
+uint64_t DiagonalSituation::get_occ_to_up_left() {
+  return this->get_occ_to_direction(mask_up_left);
+}
+
+uint64_t DiagonalSituation::get_occ_to_down_right() {
+  return this->get_occ_to_direction(mask_down_right);
 }

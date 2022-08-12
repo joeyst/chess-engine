@@ -87,7 +87,15 @@ int main () {
   cout << "Mask up left: " << 7;
   print_board(Diagonal::mask_up_left(7));
 
-
+  auto board = EVERY_OTHER_RANK;
+  print_board(board);
+  cout << "get_occ_to_up_right(): " << endl;
+  auto dsss = DiagonalSituation(board, 11);
+  print_board(dsss.get_occ_to_up_right());
+  print_board(dsss.get_occ_to_down_left());
+  print_board(dsss.get_occ_to_up_left());
+  print_board(dsss.get_occ_to_down_right());
+  print_board(dsss.get_occ_to_direction(Diagonal::mask_up_right));
 
   return 0;
 }
