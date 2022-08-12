@@ -4,6 +4,7 @@
 #include "masks/horizontal_masks.h"
 #include "diagonal_positions.h"
 #include <cassert>
+#include "tests/diagonal_positions_tests.h"
 
 
 
@@ -36,88 +37,8 @@ int main () {
 
 
   using namespace Diagonal;
-  /*
-  print_board(get_up_right_mask(0));
-  print_board(get_up_right_mask(1));  
-  print_board(get_up_right_mask(15));
-  print_board(get_up_right_mask(63));
-  print_board(get_up_right_mask(40));
-  print_board(get_up_right_mask(23));
+  diagonal_positions_tests();
 
-  cout << "DIAGONALS: " << endl;
-  print_board(UP_LEFT_DIAGONAL);
-  print_board(get_up_left_mask(0));
-  print_board(get_up_left_mask(1));  
-  print_board(get_up_left_mask(15));
-  print_board(get_up_left_mask(63));
-  print_board(get_up_left_mask(40));
-  print_board(get_up_left_mask(23));
-
-  cout << "SHIFTED DIAGONALS: " << endl;
-  auto ss = Situations();
-  ss.generate_horizontal_situations();
-  for (auto k : ss.generate_horizontal_situations()) {
-    cout << "Original: " << endl;
-    print_board(k.board);
-    print_board(Diagonal::horizontal_to_up_left(k.board));
-  }
-  */
-  
-  
-  print_board(Diagonal::mask_up_right(9));
-  cout << "Mask up right: " << 9;  
-  print_board(Diagonal::mask_up_right(1));
-  cout << "Mask up right: " << 1;  
-  print_board(Diagonal::mask_up_right(42));
-  cout << "Mask up right: " << 42;  
-  print_board(Diagonal::mask_up_left(0));
-  cout << "Mask up left: " << 0;  
-  print_board(Diagonal::mask_up_left(1));
-  cout << "Mask up left: " << 1;  
-  print_board(Diagonal::mask_up_left(17));
-  cout << "Mask up left: " << 17;  
-  print_board(Diagonal::mask_up_left(63));
-  cout << "Mask up left: " << 63 << endl;  
-  
-  cout << "Mask up left: " << 29;
-  print_board(Diagonal::mask_up_left(29));
-  cout << "Mask up left: " << 20;
-  print_board(Diagonal::mask_up_left(20));
-  cout << "Mask up left: " << 23;
-  print_board(Diagonal::mask_up_left(23));
-  cout << "Mask up left: " << 7;
-  print_board(Diagonal::mask_up_left(7));
-
-  auto board = EVERY_OTHER_RANK;
-  print_board(board);
-  cout << "get_occ_to_up_right(): " << endl;
-  auto dsss = DiagonalSituation(board, 11);
-  print_board(dsss.get_occ_to_up_right());
-  print_board(dsss.get_occ_to_down_left());
-  print_board(dsss.get_occ_to_up_left());
-  print_board(dsss.get_occ_to_down_right());
-  print_board(dsss.get_occ_to_direction(Diagonal::mask_up_right));
-
-  assert(Diagonal::mask_to_direction(Diagonal::get_up_right_mask, Mask::fill_to_right, 35) == Diagonal::mask_up_right(35));
-  print_board(Diagonal::mask_up_right(35));
-  print_board(Diagonal::mask_up_left(35));
-  print_board(Diagonal::mask_down_right(35));
-  print_board(Diagonal::mask_down_left(35));
-
-  auto aaaa = Diagonal::get_up_left_mask(46);
-  auto bbbb = Diagonal::get_a_diagonal_mask(Diagonal::get_up_left_diagonal_number, 46);
-  auto cccc = Diagonal::get_up_right_mask(46);
-  print_board(aaaa);
-  print_board(bbbb);
-  print_board(cccc);
-
-  print_board(TEST_DIAGONAL_IN_TOP_LEFT_QUADRANT);
-  cout << "normalize_up_right: " << endl;
-  auto aaaaa = Diagonal::normalize_up_left(EVERY_OTHER_FILE, 40);
-  print_board(aaaaa);
-  auto bbbbb = Diagonal::normalize_diagonal(get_inverted_up_left_diagonal_number, EVERY_OTHER_FILE, 40);
-  print_board(bbbbb);
-  assert(aaaaa == bbbbb);
 
   return 0;
 }

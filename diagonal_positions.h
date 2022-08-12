@@ -48,6 +48,4 @@ uint64_t mask_up_left(uint8_t square);
 uint64_t mask_down_left(uint8_t square);
 }
 
-class UpRightDiagonalPosition {};
-
 #endif
