@@ -2,6 +2,7 @@
 #include "cross_positions.h"
 #include "position.h"
 #include "masks/horizontal_masks.h"
+#include "diagonal_positions.h"
 
 
 
@@ -76,6 +77,22 @@ int main () {
     print_board(kv.second);
   }
   */
+
+  print_board(get_up_right_mask(0));
+  print_board(get_up_right_mask(1));  
+  print_board(get_up_right_mask(15));
+  print_board(get_up_right_mask(63));
+  print_board(get_up_right_mask(40));
+  print_board(get_up_right_mask(23));
+
+  cout << "DIAGONALS: " << endl;
+  print_board(UP_LEFT_DIAGONAL);
+  print_board(get_up_left_mask(0));
+  print_board(get_up_left_mask(1));  
+  print_board(get_up_left_mask(15));
+  print_board(get_up_left_mask(63));
+  print_board(get_up_left_mask(40));
+  print_board(get_up_left_mask(23));
 
   return 0;
 }
