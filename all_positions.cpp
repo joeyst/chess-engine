@@ -34,6 +34,7 @@ unordered_map<Board, Board> GenerateSituations::get_cross_block_map() {
 int main () {
 
 
+  using namespace Diagonal;
   print_board(get_up_right_mask(0));
   print_board(get_up_right_mask(1));  
   print_board(get_up_right_mask(15));
@@ -56,7 +57,7 @@ int main () {
   for (auto k : ss.generate_horizontal_situations()) {
     cout << "Original: " << endl;
     print_board(k.board);
-    print_board(horizontal_to_up_left(k.board));
+    print_board(Diagonal::horizontal_to_up_left(k.board));
   }
 
   return 0;
