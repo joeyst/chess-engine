@@ -35,6 +35,10 @@ uint64_t HorizontalSituation::get_occ_to_right() {
   return (this->board & Masks::mask_to_right(this->file));
 }
 
+uint64_t HorizontalSituation::get_occ_to_left() {
+  return (this->board & Masks::mask_to_left(this->file));
+}
+
 int main () {
   auto hs = HorizontalSituation(1, 1);
   hs.print_board();
@@ -43,5 +47,6 @@ int main () {
   Masks::print_board(hs.get_occ_to_right());
   hs = HorizontalSituation(0xAA, 5);
   Masks::print_board(hs.get_occ_to_right());
+  Masks:print_board(hs.get_occ_to_left());
   return 0;
 }

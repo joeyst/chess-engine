@@ -10,5 +10,6 @@ class HorizontalSituation {
     HorizontalSituation(uint64_t b, uint8_t f);
     void print_board();
     uint64_t get_occ_to_right();
+    uint64_t get_occ_to_left();
 };
 #endif
