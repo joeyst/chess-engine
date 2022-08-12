@@ -27,10 +27,10 @@ class Situations {
     vector<HorizontalSituation> horizontal_situations;
     vector<VerticalSituation> vertical_situations;
     Situations();
-    vector<HorizontalSituation> generate_horizontal_situations_for_file(int file);
-    vector<HorizontalSituation> generate_horizontal_situations();
-    vector<VerticalSituation> generate_vertical_situations_for_rank(int rank);
-    vector<VerticalSituation> generate_vertical_situations();
+    static vector<HorizontalSituation> generate_horizontal_situations_for_file(int file);
+    static vector<HorizontalSituation> generate_horizontal_situations();
+    static vector<VerticalSituation> generate_vertical_situations_for_rank(int rank);
+    static vector<VerticalSituation> generate_vertical_situations();
 };
 
 
