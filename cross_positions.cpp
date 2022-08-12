@@ -30,11 +30,17 @@ void HorizontalSituation::print_board() {
   cout << endl << "\n    0 1 2 3 4 5 6 7\n\n\n";
 }
 
+uint64_t HorizontalSituation::get_occ_to_right() {
+  return (this->board & Masks::mask_to_right(this->file));
+}
+
 int main () {
   auto hs = HorizontalSituation(1, 1);
   hs.print_board();
-  hs.board = mask_to_right(5);
   hs.print_board();
-  print_board(mask_to_right(5));
+  hs = HorizontalSituation(FIRST_HORIZONTAL, 1);
+  Masks::print_board(hs.get_occ_to_right());
+  hs = HorizontalSituation(0xAA, 5);
+  Masks::print_board(hs.get_occ_to_right());
   return 0;
 }
