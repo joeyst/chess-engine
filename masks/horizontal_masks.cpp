@@ -1,4 +1,5 @@
 #include "horizontal_masks.h"
+#include "../constants.h"
 
 uint64_t Masks::mask_to_left(int file) {
   return (FIRST_HORIZONTAL >> (8 - file));

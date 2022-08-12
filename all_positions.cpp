@@ -35,6 +35,7 @@ int main () {
 
 
   using namespace Diagonal;
+  /*
   print_board(get_up_right_mask(0));
   print_board(get_up_right_mask(1));  
   print_board(get_up_right_mask(15));
@@ -59,6 +60,34 @@ int main () {
     print_board(k.board);
     print_board(Diagonal::horizontal_to_up_left(k.board));
   }
+  */
+  
+  
+  print_board(Diagonal::mask_up_right(9));
+  cout << "Mask up right: " << 9;  
+  print_board(Diagonal::mask_up_right(1));
+  cout << "Mask up right: " << 1;  
+  print_board(Diagonal::mask_up_right(42));
+  cout << "Mask up right: " << 42;  
+  print_board(Diagonal::mask_up_left(0));
+  cout << "Mask up left: " << 0;  
+  print_board(Diagonal::mask_up_left(1));
+  cout << "Mask up left: " << 1;  
+  print_board(Diagonal::mask_up_left(17));
+  cout << "Mask up left: " << 17;  
+  print_board(Diagonal::mask_up_left(63));
+  cout << "Mask up left: " << 63 << endl;  
+  
+  cout << "Mask up left: " << 29;
+  print_board(Diagonal::mask_up_left(29));
+  cout << "Mask up left: " << 20;
+  print_board(Diagonal::mask_up_left(20));
+  cout << "Mask up left: " << 23;
+  print_board(Diagonal::mask_up_left(23));
+  cout << "Mask up left: " << 7;
+  print_board(Diagonal::mask_up_left(7));
+
+
 
   return 0;
 }
