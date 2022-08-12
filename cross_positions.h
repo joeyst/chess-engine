@@ -29,5 +29,6 @@ class VerticalSituation {
     uint64_t get_block_below();
     uint64_t get_block_A_B();
     uint64_t flip_board_to_horizontal();
+    uint64_t flip_board_to_vertical(uint64_t b);
 };
 #endif
