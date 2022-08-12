@@ -5,6 +5,7 @@
 #include <vector>
 #include "masks/horizontal_masks.h"
 #include <cmath>
+#include "position.h"
 
 using namespace std;
 using namespace Masks;
