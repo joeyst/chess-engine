@@ -33,4 +33,10 @@ class Situations {
     vector<VerticalSituation> generate_vertical_situations();
 };
 
+class GenerateSituations {
+  public:
+    static vector<CrossSituation> generate_cross_situations();
+
+};
+
 #endif
