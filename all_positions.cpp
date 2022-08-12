@@ -64,13 +64,18 @@ int main () {
   }
   */
 
+
+
+
   auto cbm = GenerateSituations::get_cross_block_map();
+  /*
   for (auto kv : cbm) {
     cout << "Position: " << endl;
     print_board(kv.first);
     cout << "Blockage: " << endl;
     print_board(kv.second);
   }
+  */
 
   return 0;
 }
