@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include "masks/horizontal_masks.h"
+#include <cmath>
 
 using namespace std;
 using namespace Masks;
@@ -39,6 +40,20 @@ uint64_t HorizontalSituation::get_occ_to_left() {
   return (this->board & Masks::mask_to_left(this->file));
 }
 
+uint64_t HorizontalSituation::get_block_to_right() {
+  auto occ_to_right = this->get_occ_to_right();
+  // if none blocking, return as clear 
+  if (occ_to_right == 0) return 0;
+  // get check right of index of least significant bit
+  return (Masks::mask_to_right(log2(occ_to_right & -occ_to_right)));
+}
+
+uint64_t HorizontalSituation::get_block_to_left() {
+  auto occ_to_left = this->get_occ_to_left();
+  if (occ_to_left == 0) return 0;
+  return log2(occ_to_left);
+}
+
 int main () {
   auto hs = HorizontalSituation(1, 1);
   hs.print_board();
@@ -48,5 +63,13 @@ int main () {
   hs = HorizontalSituation(0xAA, 5);
   Masks::print_board(hs.get_occ_to_right());
   Masks:print_board(hs.get_occ_to_left());
+  Masks::print_board(hs.get_block_to_right());
+  hs.file = 3;
+  Masks::print_board(hs.get_block_to_right());
+  hs.file = 4;
+  Masks::print_board(hs.get_block_to_right());
+  hs.file = 5;
+  Masks::print_board(hs.get_block_to_right());
+  hs.print_board();
   return 0;
 }
