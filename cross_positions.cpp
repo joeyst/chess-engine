@@ -58,38 +58,26 @@ uint64_t HorizontalSituation::get_block_L_R() {
   return (this->get_block_to_left() | this->get_block_to_right());
 }
 
+
+VerticalSituation::VerticalSituation() : board(0), rank(0){}
+VerticalSituation::VerticalSituation(uint64_t b, uint8_t r) : board(b), rank(r){}
+
+uint64_t VerticalSituation::flip_board_to_horizontal() {
+  auto b = this->board;
+  uint64_t new_board = 0;
+  for (int ranks_shifted = 0; ranks_shifted < 8; ranks_shifted++) {
+    new_board <<= 1;
+    if (b & TOP_SQUARE_OF_VERTICAL) {
+      new_board |= 1;
+    }
+    b <<= 8;
+  }
+  return new_board;
+}
+
 int main () {
-  auto hs = HorizontalSituation(1, 1);
-  hs.print_board();
-  hs.print_board();
-  hs = HorizontalSituation(FIRST_HORIZONTAL, 1);
-  Masks::print_board(hs.get_occ_to_right());
-  hs = HorizontalSituation(0xAA, 5);
-  Masks::print_board(hs.get_occ_to_right());
-  Masks:print_board(hs.get_occ_to_left());
-  Masks::print_board(hs.get_block_to_right());
-  hs.file = 3;
-  Masks::print_board(hs.get_block_to_right());
-  hs.file = 4;
-  Masks::print_board(hs.get_block_to_right());
-  hs.file = 5;
-  Masks::print_board(hs.get_block_to_right());
-  hs.print_board();
-  print_board(hs.get_block_to_left());
-  hs.file = 0;
-  print_board(hs.get_block_to_left());
-  hs.file = 7;
-  print_board(hs.get_block_to_left());
-  hs.file = 4;
-  print_board(hs.get_block_L_R());
-  hs.file = 3;
-  print_board(hs.get_block_L_R());
-  hs.file = 0;
-  print_board(hs.get_block_L_R());
-  hs.file = 7;
-  print_board(hs.get_block_L_R());
-
-
+  auto hs = VerticalSituation(0xF0, 1);
+  print_board(hs.flip_board_to_horizontal());
   
   return 0;
 }

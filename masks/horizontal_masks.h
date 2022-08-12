@@ -6,6 +6,7 @@
 #define HORIZONTAL_MASKS_H
 #define FIRST_HORIZONTAL 0xFF
 #define FIRST_VERTICAL 0x0101010101010101
+#define TOP_SQUARE_OF_VERTICAL 0x0100000000000000
 
 using namespace std;
 namespace Masks {
