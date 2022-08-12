@@ -23,8 +23,11 @@ class DiagonalSituation {
 
 namespace Diagonal {
 signed int get_up_right_diagonal_number(uint8_t square);
+signed int get_inverted_up_right_diagonal_number(uint8_t square);
 signed int get_up_left_diagonal_number(uint8_t square);
+signed int get_inverted_up_left_diagonal_number(uint8_t square);
 
+uint64_t get_a_diagonal_mask(signed int (*diag_calculator) (uint8_t), uint8_t square);
 uint64_t get_up_right_mask(uint8_t square);
 uint64_t get_up_left_mask(uint8_t square);
 
@@ -34,6 +37,7 @@ uint64_t horizontal_to_up_left(uint64_t board);
 uint64_t generate_up_right_situations();
 uint64_t generate_up_left_situations();
 
+uint64_t normalize_diagonal(signed int (*diag) (uint8_t), uint64_t board, uint8_t square);
 uint64_t normalize_up_right(uint64_t board, uint8_t square);
 uint64_t normalize_up_left(uint64_t board, uint8_t square);
 

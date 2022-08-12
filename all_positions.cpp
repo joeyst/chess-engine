@@ -104,5 +104,20 @@ int main () {
   print_board(Diagonal::mask_down_right(35));
   print_board(Diagonal::mask_down_left(35));
 
+  auto aaaa = Diagonal::get_up_left_mask(46);
+  auto bbbb = Diagonal::get_a_diagonal_mask(Diagonal::get_up_left_diagonal_number, 46);
+  auto cccc = Diagonal::get_up_right_mask(46);
+  print_board(aaaa);
+  print_board(bbbb);
+  print_board(cccc);
+
+  print_board(TEST_DIAGONAL_IN_TOP_LEFT_QUADRANT);
+  cout << "normalize_up_right: " << endl;
+  auto aaaaa = Diagonal::normalize_up_left(EVERY_OTHER_FILE, 40);
+  print_board(aaaaa);
+  auto bbbbb = Diagonal::normalize_diagonal(get_inverted_up_left_diagonal_number, EVERY_OTHER_FILE, 40);
+  print_board(bbbbb);
+  assert(aaaaa == bbbbb);
+
   return 0;
 }

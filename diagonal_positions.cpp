@@ -1,8 +1,18 @@
 #include "diagonal_positions.h"
 #include "mask.h"
+#include <stdexcept>
 
+using namespace Mask;
+using namespace Diagonal;
+
+// this may be wrong now
 signed int Diagonal::get_up_right_diagonal_number(uint8_t square) {
   signed int dif = ((square / 8) - (square % 8));
+  return dif;
+}
+
+signed int Diagonal::get_inverted_up_right_diagonal_number(uint8_t square) {
+  signed int dif = ((square % 8) - (square / 8));
   return dif;
 }
 
@@ -11,15 +21,26 @@ signed int Diagonal::get_up_left_diagonal_number(uint8_t square) {
   return dif;
 }
 
-uint64_t Diagonal::get_up_right_mask(uint8_t square) {
-  signed int dif = ((square / 8) - (square % 8));
-  uint64_t mask = UP_RIGHT_DIAGONAL;
+signed int Diagonal::get_inverted_up_left_diagonal_number(uint8_t square) {
+  signed int dif = (((square % 8) + (square / 8)) - 7);
+  return dif;
+}
 
+uint64_t Diagonal::get_a_diagonal_mask(signed int (*diag_calculator) (uint8_t), uint8_t square) {
+  signed int dif = diag_calculator(square);
+  uint64_t mask = 0;
+  if (diag_calculator(0) == 0) {
+    mask = UP_RIGHT_DIAGONAL;
+  } else if (diag_calculator(0) == 7) {
+    mask = UP_LEFT_DIAGONAL;
+  } else {
+    throw std::logic_error("Neither diagonal nor antidiagonal.");
+  }
   if (dif == 0) {
     return mask;
-  } 
-  
-  // in bottom right half of board
+  }
+
+  // needs shifted right
   else if (dif < 0) {
     for (int i = 0; i > dif; i--) {
       mask &= ALL_BUT_LAST_VERTICAL;
@@ -27,7 +48,7 @@ uint64_t Diagonal::get_up_right_mask(uint8_t square) {
     }
   }
 
-  // in top left half of board
+  // needs shifted left
   else if (dif > 0) {
     for (int i = 0; i < dif; i++) {
       mask &= ALL_BUT_FIRST_VERTICAL;
@@ -38,29 +59,11 @@ uint64_t Diagonal::get_up_right_mask(uint8_t square) {
 }
 
 uint64_t Diagonal::get_up_left_mask(uint8_t square) {
-  signed int dif = (7 - ((square % 8) + (square / 8)));
-  uint64_t mask = UP_LEFT_DIAGONAL;
+  return Diagonal::get_a_diagonal_mask(get_up_left_diagonal_number, square);
+}
 
-  if (dif == 0) {
-    return mask;
-  } 
-  
-  // in top right half of board
-  else if (dif < 0) {
-    for (int i = 0; i > dif; i--) {
-      mask &= ALL_BUT_LAST_VERTICAL;
-      mask <<= 1;
-    }
-  }
-
-  // in bottom left half of board
-  else if (dif > 0) {
-    for (int i = 0; i < dif; i++) {
-      mask &= ALL_BUT_FIRST_VERTICAL;
-      mask >>= 1;
-    }
-  }
-  return mask;
+uint64_t Diagonal::get_up_right_mask(uint8_t square) {
+  return Diagonal::get_a_diagonal_mask(get_up_right_diagonal_number, square);
 }
 
 uint64_t Diagonal::horizontal_to_up_right(uint64_t board) {
@@ -84,8 +87,8 @@ uint64_t Diagonal::horizontal_to_up_left(uint64_t board) {
   return new_board;
 }
 
-uint64_t Diagonal::normalize_up_right(uint64_t board, uint8_t square) {
-  signed int dif = ((square % 8) - (square / 8));
+uint64_t Diagonal::normalize_diagonal(signed int (*diag) (uint8_t), uint64_t board, uint8_t square) {
+  signed int dif = diag(square);
   if (dif == 0) {
     return board;
   }
@@ -99,18 +102,12 @@ uint64_t Diagonal::normalize_up_right(uint64_t board, uint8_t square) {
   return board;
 }
 
+uint64_t Diagonal::normalize_up_right(uint64_t board, uint8_t square) {
+  return normalize_diagonal(get_inverted_up_right_diagonal_number, board, square);
+}
+
 uint64_t Diagonal::normalize_up_left(uint64_t board, uint8_t square) {
-  signed int dif = (((square % 8) + (square / 8)) - 7);
-  if (dif == 0) {
-    return board;
-  }
-  else if (dif < 0) {
-    return (board << dif);
-  }
-  else if (dif > 0) {
-    return (board >> dif);
-  }
-  return board;
+  return normalize_diagonal(get_inverted_up_left_diagonal_number, board, square);
 }
 
 uint64_t Diagonal::mask_to_direction(uint64_t (*diag) (uint8_t), uint64_t (*fill_direction) (uint8_t), uint8_t square) {
@@ -120,8 +117,6 @@ uint64_t Diagonal::mask_to_direction(uint64_t (*diag) (uint8_t), uint64_t (*fill
   return (c & partial_mask);
 }
 
-using namespace Diagonal;
-using namespace Mask;
 uint64_t Diagonal::mask_up_right(uint8_t square) {
   return (mask_to_direction(get_up_right_mask, fill_to_right, square));
 }
@@ -162,7 +157,6 @@ uint64_t DiagonalSituation::get_occ_to_direction(uint64_t (*mask_of_square) (uin
   return b;
 }
 
-using namespace Diagonal;
 uint64_t DiagonalSituation::get_occ_to_up_right() {
   return this->get_occ_to_direction(mask_up_right);
 }
