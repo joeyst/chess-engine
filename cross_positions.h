@@ -13,5 +13,6 @@ class HorizontalSituation {
     uint64_t get_occ_to_left();
     uint64_t get_block_to_right();
     uint64_t get_block_to_left();
+    uint64_t get_block_L_R();
 };
 #endif

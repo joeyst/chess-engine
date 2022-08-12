@@ -54,6 +54,10 @@ uint64_t HorizontalSituation::get_block_to_left() {
   return (Masks::mask_to_left(log2(occ_to_left)));
 }
 
+uint64_t HorizontalSituation::get_block_L_R() {
+  return (this->get_block_to_left() | this->get_block_to_right());
+}
+
 int main () {
   auto hs = HorizontalSituation(1, 1);
   hs.print_board();
@@ -76,6 +80,15 @@ int main () {
   print_board(hs.get_block_to_left());
   hs.file = 7;
   print_board(hs.get_block_to_left());
+  hs.file = 4;
+  print_board(hs.get_block_L_R());
+  hs.file = 3;
+  print_board(hs.get_block_L_R());
+  hs.file = 0;
+  print_board(hs.get_block_L_R());
+  hs.file = 7;
+  print_board(hs.get_block_L_R());
+
 
   
   return 0;
