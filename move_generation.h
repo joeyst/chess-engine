@@ -1,30 +1,31 @@
 #include <cstdint>
 #include "board.h"
 #include <array>
+#include "pawn_move_generation.h"
+#include "L_positions.h"
+#include "move_generation_utility.h"
+#include "constants.h"
 
 #ifndef MOVE_GENERATION_H
 #define MOVE_GENERATION_H
 
 namespace GenerateMoves {
-  namespace {
-    int team_number_to_board(int team);
-    vector<uint64_t> split_moves_into_separate_boards(uint64_t potential_moves);
-    vector<ARRAY_OF_BOARDS> update_pawns_on_board(ARRAY_OF_BOARDS old_board, vector<ARRAY_OF_BOARDS> new_pawn_locations, int offset);
-    vector<ARRAY_OF_BOARDS> clear_taken_piece(vector<ARRAY_OF_BOARDS> states, int team);
+
+  namespace Knight {
+
+    namespace {
+      uint64_t can_move_to(uint64_t square, int team, uint64_t enemy_occ);
+      vector<uint64_t> generate_knight_states_generic(uint64_t board_with_knights, int team, uint64_t ally_occ);
+      vector<ARRAY_OF_BOARDS> generate_knight_states_for_one_knight_updated(uint64_t specific_knight, int team, uint64_t ally_occ, ARRAY_OF_BOARDS bitmaps);
+      vector<ARRAY_OF_BOARDS> generate_knight_states_generic(uint64_t knight_layer, int team, uint64_t ally_occ, ARRAY_OF_BOARDS bitmaps);
+    }
+
+
     
-    vector<array<uint64_t, 12>> generate_pawn_states_generic(ARRAY_OF_BOARDS boards, uint64_t (*f) (uint64_t pawns, uint64_t occ), int offset, int team, uint64_t (*retrieve) (ARRAY_OF_BOARDS));
-    vector<array<uint64_t, 12>> generate_wpawn_one_forward_states(array<uint64_t, 12> boards);
-    vector<array<uint64_t, 12>> generate_wpawn_two_forward_states(array<uint64_t, 12> boards);
-    vector<array<uint64_t, 12>> generate_bpawn_one_forward_states(array<uint64_t, 12> boards);
-    vector<array<uint64_t, 12>> generate_bpawn_two_forward_states(array<uint64_t, 12> boards);
+    vector<ARRAY_OF_BOARDS> generate_bknight_states(uint64_t knights, uint64_t ally_occ, ARRAY_OF_BOARDS bitmaps);
+    vector<ARRAY_OF_BOARDS> generate_wknight_states(uint64_t knights, uint64_t ally_occ, ARRAY_OF_BOARDS bitmaps);
 
-    vector<array<uint64_t, 12>> generate_wpawn_left_states(array<uint64_t, 12> boards);
-    vector<array<uint64_t, 12>> generate_wpawn_right_states(array<uint64_t, 12> boards);
-    vector<array<uint64_t, 12>> generate_wpawn_left_states(array<uint64_t, 12> boards);
-    vector<array<uint64_t, 12>> generate_wpawn_right_states(array<uint64_t, 12> boards);
   }
-
-  vector<array<uint64_t, 12>> generate_wpawn_states(array<uint64_t, 12> boards);
 
 }
 
