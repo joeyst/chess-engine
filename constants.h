@@ -3,6 +3,8 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
+#define ARRAY_OF_BOARDS array<uint64_t, 12>
+
 #define WHOLE_BOARD 0xFFFFFFFFFFFFFFFF
 
 #define ALL_BUT_FIRST_VERTICAL 0xFEFEFEFEFEFEFEFE
@@ -26,6 +28,9 @@
 
 #define SECOND_HORIZONTAL_FROM_TOP 0xFF000000000000
 #define SECOND_HORIZONTAL_FROM_BOTTOM 0xFF00
+
+#define WHITE 0
+#define BLACK 7
 
 uint64_t isolate_lsb(uint64_t board);
 uint64_t isolate_msb(uint64_t board);

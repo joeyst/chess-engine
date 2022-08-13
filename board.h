@@ -8,6 +8,7 @@
 #include "constants.h"
 #include "L_positions.h"
 #include "one_square_forward.h"
+#include <array>
 
 #ifndef BOARD_H
 #define BOARD_H
@@ -27,20 +28,22 @@
 #define BKING 11
 
 namespace Boards {
-  uint64_t retrieve_occ_in_range(uint64_t boards[12], uint8_t lower, uint8_t upper);
-  uint64_t retrieve_all_occ(uint64_t boards[12]);
-  uint64_t retrieve_white_occ(uint64_t boards[12]);
-  uint64_t retrieve_black_occ(uint64_t boards[12]);
+  uint64_t retrieve_occ_in_range(ARRAY_OF_BOARDS boards, uint8_t lower, uint8_t upper);
+  uint64_t retrieve_all_occ(ARRAY_OF_BOARDS boards);
+  uint64_t retrieve_white_occ(ARRAY_OF_BOARDS boards);
+  uint64_t retrieve_black_occ(ARRAY_OF_BOARDS boards);
   
-  uint64_t retrieve_ally_occ(uint64_t boards[12], uint16_t turn);
-  uint64_t retrieve_enemy_occ(uint64_t boards[12], uint16_t turn);
+  uint64_t retrieve_ally_occ(ARRAY_OF_BOARDS boards, uint16_t turn);
+  uint64_t retrieve_enemy_occ(ARRAY_OF_BOARDS boards, uint16_t turn);
 
-  uint64_t generate_current_moves(uint64_t boards[12], uint16_t turn);
+  vector<uint64_t> generate_wboard_states(ARRAY_OF_BOARDS boards);
+  vector<uint64_t> generate_bboard_states(ARRAY_OF_BOARDS boards);
+  vector<uint64_t> generate_board_states(ARRAY_OF_BOARDS boards, uint16_t turn);
 
-  uint64_t retrieve_ally_attack_map(uint64_t boards[12], uint16_t turn);
-  uint64_t retrieve_enemy_attack_map(uint64_t boards[12], uint16_t turn);
-  uint64_t retrieve_ally_defend_map(uint64_t boards[12], uint16_t turn);
-  uint64_t retrieve_ally_defend_map(uint64_t boards[12], uint16_t turn);
+  uint64_t retrieve_ally_attack_map(ARRAY_OF_BOARDS boards, uint16_t turn);
+  uint64_t retrieve_enemy_attack_map(ARRAY_OF_BOARDS boards, uint16_t turn);
+  uint64_t retrieve_ally_defend_map(ARRAY_OF_BOARDS boards, uint16_t turn);
+  uint64_t retrieve_ally_defend_map(ARRAY_OF_BOARDS boards, uint16_t turn);
 }
 
 #endif
