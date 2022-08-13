@@ -5,6 +5,7 @@
 #include "diagonal_positions.h"
 #include <cassert>
 #include "tests/diagonal_positions_tests.h"
+#include "constants.h"
 
 
 
@@ -31,6 +32,7 @@ unordered_map<Board, Board> GenerateSituations::get_cross_block_map() {
   }
   return cbm;
 }
+
 
 
 int main () {

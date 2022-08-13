@@ -1,4 +1,4 @@
-
+#include <cstdint>
 
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
@@ -23,5 +23,8 @@
 #define TEST_DIAGONAL_IN_TOP_RIGHT_QUADRANT 0x2040800000000000
 #define TEST_DIAGONAL_IN_BOTTOM_RIGHT_QUADRANT 0x804020
 #define TEST_DIAGONAL_IN_BOTTOM_LEFT_QUADRANT 0x10204
+
+uint64_t isolate_lsb(uint64_t board);
+uint64_t isolate_msb(uint64_t board);
 
 #endif
