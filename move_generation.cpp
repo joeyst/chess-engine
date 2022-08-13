@@ -38,6 +38,15 @@ namespace GenerateMoves {
       return states;
     }
 
+
+    vector<ARRAY_OF_BOARDS> generate_wrook_states(ARRAY_OF_BOARDS bitmaps, uint64_t occ, uint64_t ally_occ, uint64_t slice) {
+      return generate_rook_states_generic(bitmaps, slice, WHITE, occ, ally_occ, WROOK);
+    }
+
+    vector<ARRAY_OF_BOARDS> generate_brook_states(ARRAY_OF_BOARDS bitmaps, uint64_t occ, uint64_t ally_occ, uint64_t slice) {
+      return generate_rook_states_generic(bitmaps, slice, BLACK, occ, ally_occ, BROOK);
+    }
+
   }
-  
+
 }
