@@ -6,6 +6,7 @@
 #include <cassert>
 #include "tests/diagonal_positions_tests.h"
 #include "constants.h"
+#include "L_positions.h"
 
 
 
@@ -40,7 +41,6 @@ int main () {
 
   using namespace Diagonal;
   diagonal_positions_tests();
-
-
+  
   return 0;
 }

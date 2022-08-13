@@ -13,3 +13,8 @@ uint64_t isolate_msb(uint64_t board) {
   }
   return last_before_zero;
 }
+
+uint64_t value_from_square(uint8_t square) {
+  uint64_t b = 1;
+  return (uint64_t)(b << square);
+}

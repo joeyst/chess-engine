@@ -27,4 +27,6 @@
 uint64_t isolate_lsb(uint64_t board);
 uint64_t isolate_msb(uint64_t board);
 
+uint64_t value_from_square(uint8_t square);
+
 #endif

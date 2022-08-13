@@ -44,5 +44,7 @@ void diagonal_positions_tests() {
   assert(mask_to_all_diag_excluding_own_square(0) == 0x8040201008040200);
   assert(mask_to_all_diag_excluding_own_square(63) == 0x40201008040201);
   assert(mask_to_all_diag_excluding_own_square(56) == 0x2040810204080);
+
+  assert(value_from_square(63) == 0x8000000000000000);
   
 }
