@@ -38,8 +38,6 @@ unordered_map<Board, Board> GenerateSituations::get_cross_block_map() {
 
 
 int main () {
-
-
   using namespace Diagonal;
   diagonal_positions_tests();
   
@@ -51,6 +49,9 @@ int main () {
   uint64_t b = 0xF0000;
   print_board(TwoSqrs::calculate_moves_two_up(starting_pawns, b));
   print_board(OneSqr::calculate_moves_one_up(starting_pawns, b));
+  print_board(ForwardAndToSide::calculate_moves_right_and_up(starting_pawns, starting_pawns));
+  print_board(ForwardAndToSide::calculate_moves_left_and_up(starting_pawns, starting_pawns));
+
 
   return 0;
 }

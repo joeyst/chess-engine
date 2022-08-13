@@ -35,3 +35,27 @@ uint64_t TwoSqrs::calculate_moves_two_down(uint64_t starting_pawns, uint64_t boa
   auto one_forward = calculate_moves_one_down(starting_pawns, board);
   return calculate_moves_one_down(one_forward, board);
 }
+
+uint64_t ForwardAndToSide::calculate_moves_right_and_up(uint64_t starting_pawns, uint64_t enemies) {
+  starting_pawns &= ALL_BUT_LAST_VERTICAL;
+  uint64_t potential_moves = (starting_pawns << 9);
+  return (potential_moves & enemies);
+}
+
+uint64_t ForwardAndToSide::calculate_moves_right_and_down(uint64_t starting_pawns, uint64_t enemies) {
+  starting_pawns &= ALL_BUT_LAST_VERTICAL;
+  uint64_t potential_moves = (starting_pawns >> 7);
+  return (potential_moves & enemies);
+}
+
+uint64_t ForwardAndToSide::calculate_moves_left_and_up(uint64_t starting_pawns, uint64_t enemies) {
+  starting_pawns &= ALL_BUT_FIRST_VERTICAL;
+  uint64_t potential_moves = (starting_pawns << 7);
+  return (potential_moves & enemies);
+}
+
+uint64_t ForwardAndToSide::calculate_moves_left_and_down(uint64_t starting_pawns, uint64_t enemies) {
+  starting_pawns &= ALL_BUT_FIRST_VERTICAL;
+  uint64_t potential_moves = (starting_pawns >> 9);
+  return (potential_moves & enemies);
+}
