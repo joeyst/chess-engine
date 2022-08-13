@@ -19,6 +19,11 @@ namespace GenerateMoves {
       vector<ARRAY_OF_BOARDS> generate_wbishop_states(ARRAY_OF_BOARDS bitmaps, uint64_t occ, uint64_t ally_occ, uint64_t slice); 
       vector<ARRAY_OF_BOARDS> generate_bbishop_states(ARRAY_OF_BOARDS bitmaps, uint64_t occ, uint64_t ally_occ, uint64_t slice); 
   }
+
+  namespace Queen {
+      vector<ARRAY_OF_BOARDS> generate_wqueen_states(ARRAY_OF_BOARDS bitmaps, uint64_t occ, uint64_t ally_occ, uint64_t slice); 
+      vector<ARRAY_OF_BOARDS> generate_bqueen_states(ARRAY_OF_BOARDS bitmaps, uint64_t occ, uint64_t ally_occ, uint64_t slice); 
+  }
 }
 
 #endif
