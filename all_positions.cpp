@@ -11,7 +11,8 @@
 
 
 
-
+unordered_map<Board, Board> cross_block_map = GenerateSituations::get_cross_block_map();
+unordered_map<Board, Board> diag_block_map = {};
 
 using namespace std;
 using namespace Masks;

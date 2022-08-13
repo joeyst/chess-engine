@@ -2,8 +2,6 @@
 #include "move_generation.h"
 
 
-const unordered_map<Board, Board> cross_block_map = GenerateSituations::get_cross_block_map();
-unordered_map<Board, Board> diag_block_map = {};
 
 using namespace Boards;
 uint64_t Boards::retrieve_occ_in_range(array<uint64_t, 12> boards, uint8_t lower, uint8_t upper_inclusive) {

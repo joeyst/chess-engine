@@ -5,61 +5,39 @@
 #include "move_generation_utility.h"
 #include <vector>
 #include "constants.h"
+#include "knight_move_generation.h"
+
+using namespace std;
 
 namespace GenerateMoves {
-  namespace Knight {
-      
-    namespace {
-      uint8_t get_layer_from_team(int team) {
-        if (team == WHITE) {
-          return WKNIGHT;
-        } else if (team == BLACK) {
-          return BKNIGHT;
-        } else {
-          throw logic_error("GenerateMoves::Knight::(anonymous namespace)::get_layer_from_team, neither white nor black team.");
+
+  namespace Rook {
+
+    vector<ARRAY_OF_BOARDS> generate_rook_states_generic(ARRAY_OF_BOARDS bitmaps, uint64_t slice, uint8_t team, uint64_t occ, uint64_t ally_occ, uint8_t index_of_layer) {
+      vector<ARRAY_OF_BOARDS> states = {};
+      vector<uint64_t> separated_rooks = split_moves_into_separate_boards(slice);
+      uint64_t occ_on_cross;
+      uint64_t open_for_move;
+      uint64_t blocked_off;
+      uint64_t blocked_by_own_pieces;
+      ARRAY_OF_BOARDS possible_state;
+      vector<uint64_t> separate_move_possibilities;
+      for (auto rook : separated_rooks) {
+        occ_on_cross = cross_occ(log2(rook), occ);
+        blocked_off = cross_block_map[occ_on_cross];
+        blocked_off |= ally_occ;
+        blocked_off ^= WHOLE_BOARD;
+        blocked_off &= cross_mask_from_square(log2(rook));
+        separate_move_possibilities = split_moves_into_separate_boards(blocked_off);
+
+        for (auto possible_board : separate_move_possibilities) {
+          possible_state = update_piece(rook, possible_board, bitmaps, team, index_of_layer);
+          states.push_back(possible_state);
         }
       }
-
-      uint64_t can_move_to(uint64_t board_with_knight, int team, uint64_t ally_occ) {
-        uint8_t square = log2(board_with_knight);
-        uint64_t L_of_moves = L_shape::generate_L_from_square(square);
-        return (L_of_moves & (ally_occ ^ WHOLE_BOARD));
-      }
-
-      vector<uint64_t> generate_knight_states_for_one_knight_unupdated(uint64_t specific_knight, int team, uint64_t ally_occ) {
-        vector<uint64_t> states = {};
-        uint64_t result = can_move_to(specific_knight, team, ally_occ);
-        return split_moves_into_separate_boards(result);
-      }
-
-      vector<ARRAY_OF_BOARDS> generate_knight_states_for_one_knight_updated(uint64_t specific_knight, int team, uint64_t ally_occ, ARRAY_OF_BOARDS bitmaps) {
-        vector<ARRAY_OF_BOARDS> states = {};
-        vector<uint64_t> can_move_to_squares = generate_knight_states_for_one_knight_unupdated(specific_knight, team, ally_occ);
-        for (auto s : can_move_to_squares) {
-          auto a = update_piece(specific_knight, s, bitmaps, team, get_layer_from_team(team));
-          states.push_back(a);
-        }
-        return states;
-      }
-
-      vector<ARRAY_OF_BOARDS> generate_knight_states_generic(uint64_t knights, int team, uint64_t ally_occ, ARRAY_OF_BOARDS bitmaps) {
-        vector<ARRAY_OF_BOARDS> states = {};
-        vector<uint64_t> specific_knights = split_moves_into_separate_boards(knights);
-        for (auto knight : specific_knights) {
-          for (auto c : generate_knight_states_for_one_knight_updated(knight, team, ally_occ, bitmaps)) {
-            states.push_back(c);
-          }
-        }
-        return states;
-      }
+      return states;
     }
 
-    vector<ARRAY_OF_BOARDS> generate_bknight_states(uint64_t knights, uint64_t ally_occ, ARRAY_OF_BOARDS bitmaps) {
-      return generate_knight_states_generic(knights, BLACK, ally_occ, bitmaps);
-    }
-
-    vector<ARRAY_OF_BOARDS> generate_wknight_states(uint64_t knights, uint64_t ally_occ, ARRAY_OF_BOARDS bitmaps) {
-      return generate_knight_states_generic(knights, WHITE, ally_occ, bitmaps);
-    }
   }
+  
 }

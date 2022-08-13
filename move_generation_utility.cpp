@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <vector>
 #include "constants.h"
+#include "diagonal_positions.h"
 
 using namespace std;
 namespace GenerateMoves {
@@ -33,5 +34,21 @@ namespace GenerateMoves {
     ARRAY_OF_BOARDS with_removed_piece = remove_taken_piece(finish, bitmaps, team);
     with_removed_piece[layer_of_piece] ^= (start | finish);
     return with_removed_piece;
+  }
+
+  uint64_t cross_mask_from_square(uint8_t square) {
+    return (Masks::mask_to_left(square % 8) | Masks::mask_to_right(square % 8) | Masks::mask_above(square / 8) | Masks::mask_below(square / 8));
+  }
+
+  uint64_t diag_mask_from_square(uint8_t square) {
+    return (Diagonal::mask_up_right(square) | Diagonal::mask_up_left(square) | Diagonal::mask_down_right(square) | Diagonal::mask_down_left(square));
+  }
+
+  uint64_t cross_occ(uint8_t square, uint64_t board) {
+    return (cross_mask_from_square(square) & board);
+  }
+
+  uint64_t diag_occ(uint8_t square, uint64_t board) {
+    return (diag_mask_from_square(square) & board);
   }
 }
