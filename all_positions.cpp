@@ -7,6 +7,7 @@
 #include "tests/diagonal_positions_tests.h"
 #include "constants.h"
 #include "L_positions.h"
+#include "one_square_forward.h"
 
 
 
@@ -42,5 +43,14 @@ int main () {
   using namespace Diagonal;
   diagonal_positions_tests();
   
+  uint64_t starting_pawns = 0xFF10;
+  print_board(TwoSqrs::calculate_moves_two_up(starting_pawns, 0));
+  print_board(TwoSqrs::calculate_moves_two_down(starting_pawns + 0x0F000000000000, 0));
+  print_board(TwoSqrs::calculate_moves_two_up(starting_pawns, EVERY_OTHER_FILE));
+  print_board(EVERY_OTHER_FILE);
+  uint64_t b = 0xF0000;
+  print_board(TwoSqrs::calculate_moves_two_up(starting_pawns, b));
+  print_board(OneSqr::calculate_moves_one_up(starting_pawns, b));
+
   return 0;
 }
