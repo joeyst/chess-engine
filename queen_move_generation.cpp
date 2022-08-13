@@ -3,7 +3,9 @@
 #include "rook_move_generation.h"
 #include "queen_move_generation.h"
 
-namespace Queen {
+namespace GenerateMoves {
+  
+  namespace Queen {
 
     vector<ARRAY_OF_BOARDS> generate_wqueen_states(ARRAY_OF_BOARDS bitmaps, uint64_t occ, uint64_t ally_occ, uint64_t slice) {
       vector<ARRAY_OF_BOARDS> states = {};
@@ -20,3 +22,5 @@ namespace Queen {
     }
 
   }
+
+}

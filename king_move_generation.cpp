@@ -6,7 +6,9 @@
 using namespace std;
 using namespace GenerateMoves;
 
-namespace King {
+namespace GenerateMoves {
+
+  namespace King {
 
     vector<ARRAY_OF_BOARDS> generate_king_states_generic(ARRAY_OF_BOARDS bitmaps, uint64_t square, uint8_t index_of_slice, uint64_t ally_occ, uint8_t team) {
       vector<ARRAY_OF_BOARDS> states = {};
@@ -29,4 +31,5 @@ namespace King {
       return generate_king_states_generic(bitmaps, square, BKING, ally_occ, BLACK);
     }
 
-   }
+  }
+}
