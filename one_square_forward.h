@@ -35,3 +35,12 @@ namespace ForwardAndToSide {
 }
 
 #endif
+
+#ifndef SQUARE_MOVES
+#define SQUARE_MOVES
+
+namespace SquareMoves {
+  uint64_t calculate_square_moves(uint64_t square);
+}
+
+#endif

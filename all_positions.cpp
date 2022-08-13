@@ -52,6 +52,10 @@ int main () {
   print_board(ForwardAndToSide::calculate_moves_right_and_up(starting_pawns, starting_pawns));
   print_board(ForwardAndToSide::calculate_moves_left_and_up(starting_pawns, starting_pawns));
 
+  print_board(SquareMoves::calculate_square_moves(0));
+  print_board(SquareMoves::calculate_square_moves(63));
+  print_board(SquareMoves::calculate_square_moves(45));
+  print_board(SquareMoves::calculate_square_moves(5));
 
   return 0;
 }
