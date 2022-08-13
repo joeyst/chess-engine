@@ -190,3 +190,8 @@ uint64_t DiagonalSituation::get_blocked_in_all_diagonals() {
   auto dr = this->get_blocked_to_down_right();
   return (ul | ur | dl | dr);
 }
+
+uint64_t Diagonal::get_blocked_in_all_diagonals(uint64_t occ, uint64_t square) {
+  auto ds = DiagonalSituation(occ, square);
+  return ds.get_blocked_in_all_diagonals();
+}

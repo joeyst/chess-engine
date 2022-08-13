@@ -49,6 +49,8 @@ uint64_t mask_down_right(uint8_t square);
 uint64_t mask_up_left(uint8_t square);
 uint64_t mask_down_left(uint8_t square);
 uint64_t mask_to_all_diag_excluding_own_square(uint8_t square);
+
+uint64_t get_blocked_in_all_diagonals(uint64_t occ, uint64_t square);
 }
 
 #endif
