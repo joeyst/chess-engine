@@ -162,9 +162,33 @@ void play_game() {
   }
 }
 
-int main () {
-  
-  play_game();
+void play_engine_turn(ARRAY_OF_BOARDS &state, Minimax engine) {
+  state = engine.calculate_move(wstates(state), true, engine.depth);
+  print_board_with_letters(state);
+  cout << "The engine has played." << endl;
+  cout << "Turn: " << (int)(engine.current_turn + 1);
+}
 
+void play_player_turn(uint16_t current_turn, ARRAY_OF_BOARDS &state) {
+  state = get_legal_input(state, current_turn);
+  print_board_with_letters(state);
+}
+
+void play_with_engine(uint8_t depth, int16_t (*eval) (ARRAY_OF_BOARDS)) {
+  auto board = setup_board();
+  Minimax engine;
+  uint16_t turn = 0;
+
+  while (true) {
+    turn++;
+    engine = Minimax(depth, eval, turn);
+    play_engine_turn(board, engine);
+    play_player_turn(turn, board);
+  }
+
+}
+
+int main () {
+  play_with_engine(2, EvaluationFunction::simple_count_of_points);
   return 0;
 }

@@ -1,6 +1,7 @@
 #include "include_files.h"
 #include "constants.h"
 #include "board.h"
+#include "minimax.h"
 
 #ifndef GAME_H
 #define GAME_H
@@ -23,5 +24,9 @@ class Move {
     uint8_t end_square();
 };
 Move get_input();
+
+void play_engine_turn(std::ARRAY_OF_BOARDS &state, Minimax engine);
+void play_with_engine(uint8_t depth, int16_t (*eval) (ARRAY_OF_BOARDS));
+void play_player_turn(uint16_t current_turn, std::ARRAY_OF_BOARDS &state);
 
 #endif

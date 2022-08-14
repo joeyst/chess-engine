@@ -51,6 +51,5 @@ void print_board_with_letters(ARRAY_OF_BOARDS bitmaps) {
     }
   }
   board += "\n\n   0 1 2 3 4 5 6 7\n\n\n";
-  cout << board.size();
   cout << board;
 }

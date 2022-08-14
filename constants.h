@@ -1,4 +1,5 @@
 #include <cstdint>
+#include <array>
 
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
@@ -56,6 +57,10 @@ uint64_t isolate_msb(uint64_t board);
 
 uint64_t value_from_square(uint8_t square);
 uint64_t all_but_index(uint8_t square);
+
+uint8_t count_pieces_on_slice(uint64_t board);
+
+std::array<uint8_t, 12> piece_count(std::ARRAY_OF_BOARDS state);
 
 namespace Masks {
   uint64_t mask_of_given_rank(uint8_t rank);

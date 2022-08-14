@@ -1,6 +1,8 @@
 #include "constants.h"
 #include <iostream>
 
+using namespace std;
+
 uint64_t isolate_lsb(uint64_t board) {
   return (board & -board);
 }
@@ -23,6 +25,23 @@ uint64_t value_from_square(uint8_t square) {
 uint64_t all_but_index(uint8_t square) {
   uint64_t value_from_index = value_from_square(square);
   return (WHOLE_BOARD ^ value_from_index);
+}
+
+uint8_t count_pieces_on_slice(uint64_t board) {
+  uint8_t count = 0;
+  while (board) {
+    count++;
+    board &= (board - 1);
+  }
+  return count;
+}
+
+array<uint8_t, 12> piece_count(ARRAY_OF_BOARDS state) {
+  array<uint8_t, 12> count = {};
+  for (int slice_index = 0; slice_index < 12; slice_index++) {
+    count[slice_index] = count_pieces_on_slice(state[slice_index]);
+  }
+  return count;
 }
 
 namespace Masks {
