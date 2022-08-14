@@ -20,12 +20,12 @@ namespace GenerateMoves {
       vector<uint64_t> separate_move_possibilities;
       for (auto bishop : separated_bishops) {
         square_of_piece = log2(bishop);
-        occ_on_diag = diag_occ(square_of_piece, occ);
-        if (diag_block_map.count(occ_on_diag)) {
-          blocked_off = diag_block_map[occ_on_diag];
+        occ_on_diag = diag_occ_cropped(square_of_piece, occ);
+        if (diag_block_map_map.count(square_of_piece) && diag_block_map_map[square_of_piece].count(occ_on_diag)) {
+          blocked_off = diag_block_map_map[square_of_piece][occ_on_diag];
         } else {
           blocked_off = Diagonal::get_blocked_in_all_diagonals(occ, log2(bishop));
-          diag_block_map[occ_on_diag] = blocked_off;
+          diag_block_map_map[square_of_piece][diag_occ_cropped(square_of_piece, occ)] = blocked_off;
         }
         blocked_off |= ally_occ;
         blocked_off ^= WHOLE_BOARD;

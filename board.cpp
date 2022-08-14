@@ -73,12 +73,3 @@ vector<uint64_t> Boards::generate_board_states(array<uint64_t, 12> boards, uint1
 }
 
 
-int main () {
-  using namespace Diagonal;
-  diagonal_positions_tests();
-  array<uint64_t, 12> board = {};
-  board[WPAWN] = 0xFEF0FF00;
-  board[BPAWN] = 0x0200000000;
-  for (auto a : GenerateMoves::Pawn::generate_wpawn_states(board)) Masks::print_board(a[3]);
-  return 0;
-}

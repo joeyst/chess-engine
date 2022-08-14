@@ -12,7 +12,11 @@
 #ifndef MOVE_GENERATION_H
 #define MOVE_GENERATION_H
 
+namespace GenerateMoves {
 
+  vector<ARRAY_OF_BOARDS> wstates(ARRAY_OF_BOARDS bitmaps);
+  vector<ARRAY_OF_BOARDS> bstates(ARRAY_OF_BOARDS bitmaps);
 
+}
 
 #endif

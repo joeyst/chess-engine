@@ -6,12 +6,22 @@
 #include <vector>
 #include "constants.h"
 #include "move_generation_utility.h"
+#include "console.h"
 
 using namespace std;
 
 namespace GenerateMoves {
   namespace Pawn {
     namespace {
+      uint64_t positive_or_negative_board_shift(uint64_t board, signed shift) {
+        if (shift < 0) {
+          return (board << -shift);
+        } else if (shift > 0) {
+          return (board >> shift);
+        } else {
+          return board;
+        }
+      }
 
       int team_number_to_board(int team) {
         if (team == WHITE) {
@@ -30,8 +40,7 @@ namespace GenerateMoves {
         uint8_t board_of_pawns = team_number_to_board(team);
 
         for (auto p : new_pawn_locations) {
-          // need function to adjust for negative shifts
-          previous_bit = (p >> offset);
+          previous_bit = positive_or_negative_board_shift(p, offset);
           copy_of_boards = old_board;
           copy_of_boards[board_of_pawns] ^= previous_bit;
           copy_of_boards[board_of_pawns] |= p;
@@ -46,13 +55,10 @@ namespace GenerateMoves {
         uint64_t own_state;
         uint64_t nondeletion_squares;
         
-        for (auto state : states) {
+        for (auto &state : states) {
           own_state = state[board_of_pawns];
           nondeletion_squares = (own_state ^ WHOLE_BOARD);
-
-          for (int board_number = 0; board_number < 12; board_number++) {
-            if (board_number != board_of_pawns) state[board_number] &= nondeletion_squares;
-          }
+          state = override_other_occupation(team, state);
         }
         return states;
       }
@@ -62,11 +68,8 @@ namespace GenerateMoves {
         int board_of_pawns = team_number_to_board(team);
         uint64_t potential_moves = f(boards[board_of_pawns], retrieve(boards));
         vector<uint64_t> pawn_boards = split_moves_into_separate_boards(potential_moves);
-
-        uint64_t previous_bit;
-        array<uint64_t, 12> copy_of_boards;
-        vector<ARRAY_OF_BOARDS> states = update_pawns_on_board(boards, pawn_boards, offset, team);
-        return clear_taken_piece(states, team);
+        vector<ARRAY_OF_BOARDS> states_without_cleared_taken_pieces = update_pawns_on_board(boards, pawn_boards, offset, team);
+        return clear_taken_piece(states_without_cleared_taken_pieces, team);
       }
 
       vector<ARRAY_OF_BOARDS> generate_wpawn_one_forward_states(ARRAY_OF_BOARDS boards) {

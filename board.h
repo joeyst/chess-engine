@@ -28,7 +28,9 @@
 #define BKING 11
 
 extern unordered_map<Board, Board> cross_block_map;
+extern unordered_map<uint8_t, unordered_map<Board, Board>> cross_block_map_map;
 extern unordered_map<Board, Board> diag_block_map;
+extern unordered_map<uint8_t, unordered_map<Board, Board>> diag_block_map_map;
 
 namespace Boards {
   uint64_t retrieve_occ_in_range(ARRAY_OF_BOARDS boards, uint8_t lower, uint8_t upper);

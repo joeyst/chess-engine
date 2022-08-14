@@ -23,11 +23,14 @@ namespace GenerateMoves {
       uint64_t open_for_move;
       uint64_t blocked_off;
       uint64_t blocked_by_own_pieces;
+      uint8_t square_index;
+
       ARRAY_OF_BOARDS possible_state;
       vector<uint64_t> separate_move_possibilities;
       for (auto rook : separated_rooks) {
-        occ_on_cross = cross_occ(log2(rook), occ);
-        blocked_off = cross_block_map[occ_on_cross];
+        square_index = log2(rook);
+        occ_on_cross = cross_occ_cropped(square_index, occ);
+        blocked_off = cross_block_map_map[square_index][occ_on_cross];
         blocked_off |= ally_occ;
         blocked_off ^= WHOLE_BOARD;
         blocked_off &= cross_mask_from_square(log2(rook));

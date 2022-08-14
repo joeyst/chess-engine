@@ -11,6 +11,7 @@ using namespace std;
 namespace GenerateMoves {
   namespace Pawn {
     namespace {
+      uint64_t positive_or_negative_board_shift(uint64_t board, uint8_t shift);
       int team_number_to_board(int team);
       vector<ARRAY_OF_BOARDS> update_pawns_on_board(ARRAY_OF_BOARDS old_board, vector<ARRAY_OF_BOARDS> new_pawn_locations, int offset);
       vector<ARRAY_OF_BOARDS> clear_taken_piece(vector<ARRAY_OF_BOARDS> states, int team);

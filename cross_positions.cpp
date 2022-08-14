@@ -45,6 +45,11 @@ uint8_t CrossSituation::get_rank() {
   return this->vs.rank;
 }
 
+uint8_t CrossSituation::get_square() {
+  return ((this->get_file()) + (this->get_rank() * 8));
+}
+
+
 uint64_t CrossSituation::get_adjusted_horizontal() {
   return ((this->hs.board) << ((this->get_rank()) * 8));
 }

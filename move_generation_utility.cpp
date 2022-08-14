@@ -3,6 +3,7 @@
 #include <vector>
 #include "constants.h"
 #include "diagonal_positions.h"
+#include "board.h"
 
 using namespace std;
 namespace GenerateMoves {
@@ -30,6 +31,31 @@ namespace GenerateMoves {
     return bitmaps;
   }
 
+  ARRAY_OF_BOARDS override_other_occupation(uint8_t attacking_team, ARRAY_OF_BOARDS bitmaps) {
+    uint64_t attacker_occ = 0;
+    uint64_t all_but_attacker_occ = 0;
+    if (attacking_team == WHITE) {
+      attacker_occ = Boards::retrieve_white_occ(bitmaps);
+      all_but_attacker_occ = (attacker_occ ^ WHOLE_BOARD);
+      for (int board_index = 6; board_index < 12; board_index++) {
+        bitmaps[board_index] &= all_but_attacker_occ;
+      }
+      return bitmaps;
+    } 
+    else if (attacking_team == BLACK) {
+      attacker_occ = Boards::retrieve_black_occ(bitmaps);
+      all_but_attacker_occ = (attacker_occ ^ WHOLE_BOARD);
+      for (int board_index = 0; board_index < 6; board_index++) {
+        bitmaps[board_index] &= all_but_attacker_occ;
+      }
+      return bitmaps;
+    } 
+    else {
+      throw logic_error("move_generation_utility.cpp override_other_occupation, neither team passed in.");
+    }
+
+  }
+
   ARRAY_OF_BOARDS update_piece(uint64_t start, uint64_t finish, ARRAY_OF_BOARDS bitmaps, uint8_t team, uint8_t layer_of_piece) {
     ARRAY_OF_BOARDS with_removed_piece = remove_taken_piece(finish, bitmaps, team);
     with_removed_piece[layer_of_piece] ^= (start | finish);
@@ -37,7 +63,7 @@ namespace GenerateMoves {
   }
 
   uint64_t cross_mask_from_square(uint8_t square) {
-    return (Masks::mask_to_left(square % 8) | Masks::mask_to_right(square % 8) | Masks::mask_above(square / 8) | Masks::mask_below(square / 8));
+    return Masks::mask_of_cross_outside_of_square(square);
   }
 
   uint64_t diag_mask_from_square(uint8_t square) {
@@ -50,5 +76,32 @@ namespace GenerateMoves {
 
   uint64_t diag_occ(uint8_t square, uint64_t board) {
     return (diag_mask_from_square(square) & board);
+  }
+
+  uint64_t crop_board(uint8_t square, uint64_t board) {
+    uint64_t cross_board = board;
+    int file = (square % 8);
+    int rank = (square / 8);
+    if (file != 0) {
+      cross_board &= ALL_BUT_FIRST_VERTICAL;
+    } 
+    if (file != 7) {
+      cross_board &= ALL_BUT_LAST_VERTICAL;
+    }
+    if (rank != 0) {
+      cross_board &= ALL_BUT_FIRST_HORIZONTAL;
+    }
+    if (rank != 7) {
+      cross_board &= ALL_BUT_LAST_HORIZONTAL;
+    }
+    return cross_board;
+  }
+
+  uint64_t cross_occ_cropped(uint8_t square, uint64_t board) {
+    return crop_board(square, cross_occ(square, board));
+  }
+
+  uint64_t diag_occ_cropped(uint8_t square, uint64_t board) {
+    return crop_board(square, diag_occ(square, board));
   }
 }

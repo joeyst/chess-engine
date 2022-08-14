@@ -12,7 +12,9 @@
 
 
 unordered_map<Board, Board> cross_block_map = GenerateSituations::get_cross_block_map();
+unordered_map<uint8_t, unordered_map<Board, Board>> cross_block_map_map = GenerateSituations::get_cross_block_map_map();
 unordered_map<Board, Board> diag_block_map = {};
+unordered_map<uint8_t, unordered_map<Board, Board>> diag_block_map_map = {};
 
 using namespace std;
 using namespace Masks;
@@ -37,4 +39,10 @@ unordered_map<Board, Board> GenerateSituations::get_cross_block_map() {
 }
 
 
-
+unordered_map<uint8_t, unordered_map<Board, Board>> GenerateSituations::get_cross_block_map_map() {
+  unordered_map<uint8_t, unordered_map<Board, Board>> map_of_maps = {};
+  for (auto cs : generate_cross_situations()) {
+    map_of_maps[cs.get_square()][cs.get_natural_board()] = cs.get_blocked_adjusted();
+  }
+  return map_of_maps;
+}

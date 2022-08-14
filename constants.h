@@ -32,9 +32,39 @@
 #define WHITE 0
 #define BLACK 7
 
+#define OFFSET_HEX_7_RANKS 00000000000000
+#define STARTING_WPAWNS 0xFF00
+#define STARTING_BPAWNS 0xFF000000000000
+#define STARTING_WROOKS 0x81
+#define STARTING_BROOKS 0x8100000000000000
+#define STARTING_WKNIGHTS 0x42
+#define STARTING_BKNIGHTS 0x4200000000000000
+#define STARTING_WBISHOPS 0x24
+#define STARTING_BBISHOPS 0x2400000000000000
+#define STARTING_WQUEEN 0x8
+#define STARTING_BQUEEN 0x800000000000000
+#define STARTING_WKING 0x10
+#define STARTING_BKING 0x1000000000000000
+
+#define ALL_BUT_FIRST_HORIZONTAL 0xFFFFFFFFFFFFFF00
+#define ALL_BUT_LAST_HORIZONTAL 0xFFFFFFFFFFFFFF
+
+
+
 uint64_t isolate_lsb(uint64_t board);
 uint64_t isolate_msb(uint64_t board);
 
 uint64_t value_from_square(uint8_t square);
+uint64_t all_but_index(uint8_t square);
+
+namespace Masks {
+  uint64_t mask_of_given_rank(uint8_t rank);
+  uint64_t mask_of_given_file(uint8_t file);
+  uint64_t mask_to_left_of_square(uint8_t square);
+  uint64_t mask_to_right_of_square(uint8_t square);
+  uint64_t mask_above_of_square(uint8_t square);
+  uint64_t mask_below_of_square(uint8_t square);
+  uint64_t mask_of_cross_outside_of_square(uint8_t square);
+}
 
 #endif
