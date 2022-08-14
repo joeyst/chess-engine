@@ -189,6 +189,6 @@ void play_with_engine(uint8_t depth, int16_t (*eval) (ARRAY_OF_BOARDS)) {
 }
 
 int main () {
-  play_with_engine(2, EvaluationFunction::simple_count_of_points);
+  play_with_engine(3, EvaluationFunction::simple_count_of_points);
   return 0;
 }

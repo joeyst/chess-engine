@@ -41,12 +41,12 @@ namespace GenerateMoves {
     }
 
 
-      vector<ARRAY_OF_BOARDS> generate_wbishop_states(ARRAY_OF_BOARDS bitmaps, uint64_t occ, uint64_t ally_occ, uint64_t slice) {
-        return generate_bishop_states_generic(bitmaps, slice, WHITE, occ, ally_occ, WBISHOP);
+      vector<ARRAY_OF_BOARDS> generate_wbishop_states(ARRAY_OF_BOARDS bitmaps, uint64_t occ, uint64_t ally_occ, uint64_t slice, uint8_t index_slice) {
+        return generate_bishop_states_generic(bitmaps, slice, WHITE, occ, ally_occ, index_slice);
       } 
 
-      vector<ARRAY_OF_BOARDS> generate_bbishop_states(ARRAY_OF_BOARDS bitmaps, uint64_t occ, uint64_t ally_occ, uint64_t slice) {
-        return generate_bishop_states_generic(bitmaps, slice, BLACK, occ, ally_occ, BBISHOP);
+      vector<ARRAY_OF_BOARDS> generate_bbishop_states(ARRAY_OF_BOARDS bitmaps, uint64_t occ, uint64_t ally_occ, uint64_t slice, uint8_t index_slice) {
+        return generate_bishop_states_generic(bitmaps, slice, BLACK, occ, ally_occ, index_slice);
       }
   }
 
