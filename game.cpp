@@ -5,6 +5,8 @@
 #include <string>
 #include "constants.h"
 #include <unordered_set>
+#include "minimax.h"
+#include "evaluation_functions.h"
 
 
 using namespace Masks;
@@ -95,8 +97,6 @@ Move get_input () {
   return Move(user_input);
 }
 
-// need to calculate state from move. 
-
 uint8_t index_of_board_with_occupied_square(ARRAY_OF_BOARDS state, uint8_t square) {
   uint64_t value = value_from_square(square);
   for (int index = 0; index < 12; index++) {
@@ -166,7 +166,7 @@ void play_engine_turn(ARRAY_OF_BOARDS &state, Minimax engine) {
   state = engine.calculate_move(wstates(state), true, engine.depth);
   print_board_with_letters(state);
   cout << "The engine has played." << endl;
-  cout << "Turn: " << (int)(engine.current_turn + 1);
+  cout << "Turn: " << (int)(engine.current_turn + 1) << endl;
 }
 
 void play_player_turn(uint16_t current_turn, ARRAY_OF_BOARDS &state) {
@@ -183,6 +183,7 @@ void play_with_engine(uint8_t depth, int16_t (*eval) (ARRAY_OF_BOARDS)) {
     turn++;
     engine = Minimax(depth, eval, turn);
     play_engine_turn(board, engine);
+    turn++;
     play_player_turn(turn, board);
   }
 

@@ -4,30 +4,12 @@
 #include <array>
 #include "move_generation.h"
 #include "console.h"
+#include "evaluation_functions.h"
+#include <unordered_map>
+#include <algorithm>
 
 using namespace std;
 using namespace GenerateMoves;
-
-namespace EvaluationFunction {
-
-  namespace {
-    array<int16_t, 12> points_per_piece{5, 3, 9, 1, 3, 100, -5, -3, -9, -1, -3, -100};
-  }
-
-  int16_t simple_count_of_points(ARRAY_OF_BOARDS state) {
-    array<uint8_t, 12> count = piece_count(state);
-    int16_t points = 0;
-    int16_t current_points;
-
-    for (int slice_index = 0; slice_index < 12; slice_index++) {
-      current_points = count_pieces_on_slice(state[slice_index]);
-      points += (current_points * points_per_piece[slice_index]);
-    }
-    return points;
-  }
-
-}
-
 
 Minimax::Minimax(uint8_t d, int16_t (*eval) (ARRAY_OF_BOARDS), uint16_t turn) : depth(d), eval_function(eval), current_turn(turn){}
 Minimax::Minimax() : depth(0), eval_function(EvaluationFunction::simple_count_of_points), current_turn(0) {}
@@ -51,17 +33,47 @@ ARRAY_OF_BOARDS Minimax::grab_min(vector<ARRAY_OF_BOARDS> choices) {
   return this->grab_trait(choices, less<uint8_t>());
 }
 
-ARRAY_OF_BOARDS Minimax::calculate_move(vector<ARRAY_OF_BOARDS> choices, bool maximize = true, uint8_t depth_left = 0) {
-  if (depth_left == 0) return this->grab_max(choices);
-  vector<ARRAY_OF_BOARDS> candidates;
+int16_t Minimax::evaluate_position(ARRAY_OF_BOARDS choice) {
+  return this->eval_function(choice);
+}
 
+int16_t Minimax::grab_max_value(vector<ARRAY_OF_BOARDS> choices) {
+  int16_t max_value = -100;
+  for (auto choice : choices) if (this->evaluate_position(choice) > max_value) max_value = this->evaluate_position(choice);
+  return max_value;
+}
+
+int16_t Minimax::grab_min_value(vector<ARRAY_OF_BOARDS> choices) {
+  int16_t min_value = 100;
+  for (auto choice : choices) if (this->evaluate_position(choice) < min_value) min_value = this->evaluate_position(choice);
+  return min_value;
+}
+
+int16_t Minimax::evaluate_position_recursive(vector<ARRAY_OF_BOARDS> choices, bool maximize, uint8_t depth_left) {
+  if (depth_left == 0) return this->grab_max_value(choices);
+
+  vector<int16_t> possible_values;
   if (maximize) {
-    for (auto choice : choices) candidates.push_back(calculate_move(bstates(choice), false, depth_left - 1));
-    return this->grab_max(candidates);
+    for (auto choice : choices) possible_values.push_back(evaluate_position_recursive(bstates(choice), false, depth_left - 1));
+    return *max_element(possible_values.begin(), possible_values.end());
   } 
   
   else {
-    for (auto choice : choices) candidates.push_back(calculate_move(wstates(choice), true, depth_left - 1));
-    return this->grab_min(candidates);
+    for (auto choice : choices) possible_values.push_back(evaluate_position_recursive(wstates(choice), true, depth_left - 1));
+    return *min_element(possible_values.begin(), possible_values.end());
   }
+}
+
+ARRAY_OF_BOARDS Minimax::collect_values_and_pick_best_move(vector<ARRAY_OF_BOARDS> choices, bool maximize = true, uint8_t depth_left = 0) {
+  int16_t max_value = -100;
+  ARRAY_OF_BOARDS desired_choice;
+  for (auto choice : choices) if (evaluate_position_recursive({choice}) > max_value) {
+    max_value = evaluate_position_recursive({choice});
+    desired_choice = choice;
+  }
+  return desired_choice;
+}
+
+ARRAY_OF_BOARDS Minimax::calculate_move(vector<ARRAY_OF_BOARDS> choices, bool maximize = true, uint8_t depth_left = 0) {
+  return this->collect_values_and_pick_best_move(choices, maximize, depth_left); 
 }
